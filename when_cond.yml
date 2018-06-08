@@ -1,0 +1,17 @@
+#!/usr/bin/env ansible-playbook
+--- 
+- hosts: mx 
+  gather_facts: True 
+  become: True
+
+  tasks:
+  - debug: msg="{{ ansible_distribution_release }}"
+    when: ansible_distribution_release == 'trusty'
+    run_once: true
+
+  - debug: msg="{{ ansible_hostname  | regex_search('(mx)')}}"
+    run_once: true
+
+  - debug: msg="{{ ansible_hostname }}"
+    when: ansible_hostname  | regex_search('(mx)') == 'mx'
+    run_once: true
