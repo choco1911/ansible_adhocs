@@ -15,6 +15,10 @@ ansible mx -i mx.hosts -m shell -a 'uptime' -o
 ansible mx -i mx.hosts -m shell -a 'postfix flush' -b -o
 ansible mx -i mx.hosts -m shell -a 'ps aux | grep rmil[t]er' -b -o -f1
 
+# limits
+ansible mtrmail -m shell -a 'cat /proc/$(pgrep cas-fastcgi)/limits' -b
+ansible mtrmail -m shell -a 'cat /proc/$(pgrep cas-fastcgi)/limits | fgrep "open files"' -b 
+
 
 
 # Help
