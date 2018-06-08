@@ -1,0 +1,30 @@
+# checks hosts are online
+ansible mx -m ping
+
+# gather facts
+ansible mx -m setup -l mx1.mail
+
+# Attention!!! The filter option filters only the first level subkey below ansible_facts.
+ansible mx -m setup -a "filter=ansible_eth0" -l mx1.mail
+
+# Restarting service
+ansible mx -m service -a "name=rspamd state=restarted sleep=5" -s
+
+# shell command
+ansible mx -i mx.hosts -m shell -a 'uptime' -o
+ansible mx -i mx.hosts -m shell -a 'postfix flush' -b -o
+ansible mx -i mx.hosts -m shell -a 'ps aux | grep rmil[t]er' -b -o -f1
+
+
+
+# Help
+-b --become 
+-f --fork; --fork 1 # do one by one
+-i hosts
+-o --oneline        # oneline output 
+-e --extra-vars
+
+-C --check
+-D --diff
+
+
