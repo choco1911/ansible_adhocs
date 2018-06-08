@@ -1,0 +1,21 @@
+#!/usr/bin/env ansible-playbook
+--- 
+- hosts: mf 
+  gather_facts: True 
+  become: True
+  pre_tasks:
+  - name: clear log file 
+    local_action: 
+     module: shell echo -n > ./ansible.log
+    changed_when: false
+    run_once: true
+    become: false
+
+
+  tasks:
+  - setup:
+    register: hostVars 
+    run_once: true
+
+  - debug: var=hostVars
+    run_once: true
